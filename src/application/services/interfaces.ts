@@ -1,33 +1,38 @@
-export interface ClienteI {
-    numeroCliente: string;
-    numeroInstalcao: string;
+export interface ClientI {
+    numberClient: string;
+    numberInstalation: string;
     error:string | null;
 }
 
-export interface VencimentoI {
-    refereenteA: string;
-    vencimento: string;
-    valorAPagar: string;
+export interface GetTextNamePDFI{
+    text:string,
+    name:string,
+}
+export interface DueDatesAndValuesI {
+    monthReferring: string;
+    expirationDate: string;
+    amountToBePaid: string;
     error:string | null;
 }
 
-export interface ValorResI {
+export interface getItensInvoiceI {
     name:string;
-    quantidadeInicial: string;
-    valor: string;
-    tarifaUnitaria: string;
+    quantity: string;
+    price: string;
+    unityTariff: string;
     error:string | null;
 }
 
-export interface ContribuicaoPublicaI {
-    valor: string;
+export interface PublicContributionI {
+    price: string;
 }
 
-export interface RetornoDadosI {
-    cliente: ClienteI;
-    vencimentos: VencimentoI;
-    valoresArray: ValorResI[];
-    contribuicaoPublica: ContribuicaoPublicaI;
+export interface GetDataFilesI {
+    client: ClientI;
+    dueDateAndValues: DueDatesAndValuesI;
+    getInvoices: getItensInvoiceI[];
+    publicContribution: PublicContributionI;
+    path:string;
 }
 export interface PalavraChaveI {
     name: string;

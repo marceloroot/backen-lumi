@@ -21,6 +21,7 @@ export type InvoiceProps = {
     priceGDI?:string;
     unityGDI?:string;
     publicContribution:string;
+    path:string;
     
   };
  
@@ -80,6 +81,9 @@ export type InvoiceProps = {
     }
     get publicContribution() {
         return this.props.publicContribution;
+    }
+    get path(){
+        return this.props.path;
     }
   
 

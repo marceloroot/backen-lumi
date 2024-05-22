@@ -29,6 +29,7 @@ export class InvoiceRepositoryDataBase implements InvoiceRepository{
                 unityGDI:invoice.unityGDI,
                 publicContribution:invoice.publicContribution,
                 userId:invoice.userId,
+                path:invoice.path
             }
         })
         return invoice;

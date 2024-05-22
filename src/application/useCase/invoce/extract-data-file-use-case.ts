@@ -3,7 +3,7 @@ import { User } from "../../../domain/entity/user";
 import { InvoiceRepository } from "../../../domain/repository/invoice-repository";
 import { UserRepository } from "../../../domain/repository/user-repository";
 import { ProcessPDFService, namesSpace } from "../../services/extract";
-import { ValorResI } from "../../services/interfaces";
+import { getItensInvoiceI } from "../../services/interfaces";
 
 
 
@@ -20,90 +20,91 @@ export class ExtracDataFileUseCase {
     const dataFiles= await this.extractService.execute();
     
     dataFiles.map(async (dataFile) =>{
-       const user = await this.useRepository.findById(dataFile.cliente.numeroCliente);
+       const user = await this.useRepository.findById(dataFile.client.numberClient);
        console.log("USERDFFDDFD",user)
        if(user === null){
           const user  = new User({
-            id: dataFile.cliente.numeroCliente,
+            id: dataFile.client.numberClient,
             createdAt: new Date(),
           })
           await this.useRepository.create(user)
        }
       
-       let dataEnergia:ValorResI = {
+       let dataEnergia:getItensInvoiceI = {
           name:namesSpace.energia,
-          quantidadeInicial:'',
-          tarifaUnitaria:"",
-          valor:"",
+          quantity:'',
+          unityTariff:"",
+          price:"",
           error:null
        };
-       let dataEjeatada:ValorResI = {
+       let dataEjeatada:getItensInvoiceI = {
         name:namesSpace.ejetato,
-        quantidadeInicial:'',
-        tarifaUnitaria:"",
-        valor:"",
+        quantity:'',
+        unityTariff:"",
+        price:"",
         error:null
        };
 
-       let dataICMS:ValorResI= {
+       let dataICMS:getItensInvoiceI= {
         name:namesSpace.ICMS,
-        quantidadeInicial:'',
-        tarifaUnitaria:"",
-        valor:"",
+        quantity:'',
+        unityTariff:"",
+        price:"",
         error:null
-       };;
-       let dataGDI:ValorResI= {
+       };
+       let dataGDI:getItensInvoiceI= {
         name:namesSpace.GDI,
-        quantidadeInicial:'',
-        tarifaUnitaria:"",
-        valor:"",
+        quantity:'',
+        unityTariff:"",
+        price:"",
         error:null
-       };;
-       dataFile.valoresArray.forEach(item=>{
+       };
+       
+       dataFile.getInvoices.forEach(item=>{
         if(item.name === namesSpace.energia){
-           dataEnergia.quantidadeInicial = item.quantidadeInicial;
-           dataEnergia.tarifaUnitaria = item.tarifaUnitaria;
-           dataEnergia.valor = item.valor;
+           dataEnergia.quantity = item.quantity;
+           dataEnergia.unityTariff = item.unityTariff;
+           dataEnergia.price = item.price;
         }
         if(item.name === namesSpace.ejetato){
-          dataEjeatada.quantidadeInicial = item.quantidadeInicial;
-          dataEjeatada.tarifaUnitaria = item.tarifaUnitaria;
-          dataEjeatada.valor = item.valor;
+          dataEjeatada.quantity = item.quantity;
+          dataEjeatada.unityTariff = item.unityTariff;
+          dataEjeatada.price = item.price;
        }
        if(item.name === namesSpace.ICMS){
-        dataICMS.quantidadeInicial = item.quantidadeInicial;
-        dataICMS.tarifaUnitaria = item.tarifaUnitaria;
-        dataICMS.valor = item.valor;
+        dataICMS.quantity = item.quantity;
+        dataICMS.unityTariff = item.unityTariff;
+        dataICMS.price = item.price;
        }
        if(item.name === namesSpace.GDI){
-        dataGDI.quantidadeInicial = item.quantidadeInicial;
-        dataGDI.tarifaUnitaria = item.tarifaUnitaria;
-        dataGDI.valor = item.valor;
+        dataGDI.quantity = item.quantity;
+        dataGDI.unityTariff = item.unityTariff;
+        dataGDI.price = item.price;
        }
        })
 
             
 
      const invoce:Invoice = new Invoice({
-      publicContribution:dataFile.contribuicaoPublica.valor,
-      amountToBePaid:dataFile.vencimentos.valorAPagar,
-      expirationDate:dataFile.vencimentos.vencimento,
-      numeroInstalcao:dataFile.cliente.numeroInstalcao,
-      monthReferring:dataFile.vencimentos.refereenteA,
-      userId:dataFile.cliente.numeroCliente,
-      quantityEnergy:dataEnergia.quantidadeInicial,
-      unityTariffEnergy:dataEnergia.tarifaUnitaria,
-      priceEnergy:dataEnergia.valor,
-      amountIcms:dataICMS.quantidadeInicial,
-      unityIcms:dataICMS.tarifaUnitaria,
-      priceIcms: dataICMS.valor,
-      amountOfEnergyInject:dataEjeatada.quantidadeInicial,
-      unityTariffOfEnergyInject:dataEjeatada.tarifaUnitaria,
-      priceOfEnergyInject:dataEjeatada.valor,
-      amountGDI:dataGDI.quantidadeInicial,
-      unityGDI:dataGDI.tarifaUnitaria,
-      priceGDI:dataGDI.valor,
-    
+      publicContribution:dataFile.publicContribution.price,
+      amountToBePaid:dataFile.dueDateAndValues.amountToBePaid,
+      expirationDate:dataFile.dueDateAndValues.expirationDate,
+      numeroInstalcao:dataFile.client.numberInstalation,
+      monthReferring:dataFile.dueDateAndValues.monthReferring,
+      userId:dataFile.client.numberClient,
+      quantityEnergy:dataEnergia.quantity,
+      unityTariffEnergy:dataEnergia.unityTariff,
+      priceEnergy:dataEnergia.price,
+      amountIcms:dataICMS.quantity,
+      unityIcms:dataICMS.unityTariff,
+      priceIcms: dataICMS.price,
+      amountOfEnergyInject:dataEjeatada.quantity,
+      unityTariffOfEnergyInject:dataEjeatada.unityTariff,
+      priceOfEnergyInject:dataEjeatada.price,
+      amountGDI:dataGDI.quantity,
+      unityGDI:dataGDI.unityTariff,
+      priceGDI:dataGDI.price,
+      path:dataFile.path
       
      })
      console.log("invoice@##############",invoce)

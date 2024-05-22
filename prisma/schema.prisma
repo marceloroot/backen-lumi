@@ -43,6 +43,7 @@ model Invoce{
     priceGDI String?
     unityGDI String?
     publicContribution String
+    path String
 
      user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

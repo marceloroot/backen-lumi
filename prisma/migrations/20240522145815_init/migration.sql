@@ -27,6 +27,7 @@ CREATE TABLE "invoice" (
     "priceGDI" TEXT,
     "unityGDI" TEXT,
     "publicContribution" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
 
     CONSTRAINT "invoice_pkey" PRIMARY KEY ("id")
 );
