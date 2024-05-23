@@ -42,29 +42,77 @@ const keyNameReferenceData = "ReferenteaVencimentoValorapagar(R$)";
 
 const palavraChaveContribuicao = "ContribIlumPublicaMunicipal";
 
+// async function getPdfFilesFromFolder(folderPath: string): Promise<string[]> {
+//   try {
+//     const files = await fs.readdir(folderPath);
+//     const pdfFiles = files.filter(
+//       (file: any) => path.extname(file).toLowerCase() === ".pdf"
+//     );
+//     return pdfFiles;
+//   } catch (error) {
+//     console.error("Erro ao obter arquivos PDF da pasta:", error);
+//     throw error;
+//   }
+// }
+
 async function getPdfFilesFromFolder(folderPath: string): Promise<string[]> {
-  try {
-    const files = await fs.readdir(folderPath);
-    const pdfFiles = files.filter(
-      (file: any) => path.extname(file).toLowerCase() === ".pdf"
-    );
-    return pdfFiles;
-  } catch (error) {
-    console.error("Erro ao obter arquivos PDF da pasta:", error);
-    throw error;
+  let pdfFiles: string[] = [];
+
+  async function readDirectory(directory: string) {
+    try {
+      const files = await fs.readdir(directory, { withFileTypes: true });
+      for (const file of files) {
+        const filePath = path.join(directory, file.name);
+        if (file.isDirectory()) {
+          await readDirectory(filePath); // Recursivamente lê subpastas
+        } else if (file.isFile() && path.extname(file.name).toLowerCase() === '.pdf') {
+          pdfFiles.push(filePath);
+        }
+      }
+    } catch (error) {
+      console.error(`Erro ao ler diretório ${directory}:`, error);
+      throw error;
+    }
   }
+
+  await readDirectory(folderPath);
+  return pdfFiles;
 }
 
+// async function processPdfFiles(): Promise<GetTextNamePDFI[]> {
+//   const folderPathLocal = "./arquivos";
+//   const absolutePath = path.resolve(folderPathLocal);
+//   const folderPath = absolutePath
+//   try {
+//     const pdfFiles = await getPdfFilesFromFolder(folderPath);
+//     const getTextPDF: GetTextNamePDFI[] = [];
+//     for (const pdfFile of pdfFiles) {
+//       const filePath = path.join(folderPath, pdfFile);
+//       const text = await extractTextFromPDF(filePath);
+//       const createPdfData: GetTextNamePDFI = {
+//         name: pdfFile,
+//         text: text,
+//       };
+//       getTextPDF.push(createPdfData);
+//     }
+//     return getTextPDF;
+//   } catch (error) {
+//     console.error("Erro ao processar arquivos PDF:", error);
+//     throw error;
+//   }
+// }
+
 async function processPdfFiles(): Promise<GetTextNamePDFI[]> {
-  const folderPath = "./arquivos";
+  const folderPathLocal = "./arquivos";
+  const absolutePath = path.resolve(folderPathLocal);
+  const folderPath = absolutePath;
   try {
     const pdfFiles = await getPdfFilesFromFolder(folderPath);
     const getTextPDF: GetTextNamePDFI[] = [];
     for (const pdfFile of pdfFiles) {
-      const filePath = path.join(folderPath, pdfFile);
-      const text = await extractTextFromPDF(filePath);
+      const text = await extractTextFromPDF(pdfFile);
       const createPdfData: GetTextNamePDFI = {
-        name: pdfFile,
+        name: path.basename(pdfFile),
         text: text,
       };
       getTextPDF.push(createPdfData);
@@ -75,6 +123,7 @@ async function processPdfFiles(): Promise<GetTextNamePDFI[]> {
     throw error;
   }
 }
+
 
 async function extractTextFromPDF(filePath: string): Promise<string> {
   try {
@@ -114,6 +163,7 @@ const getNumberClient = (text: string): ClientI => {
 
 const getReferenceData = (text: string): DueDatesAndValuesI => {
   const startIndex = text.indexOf(keyNameReferenceData);
+  console.log(text)
 
   if (startIndex !== -1) {
     // Extrair o número do cliente
@@ -130,11 +180,19 @@ const getReferenceData = (text: string): DueDatesAndValuesI => {
       finalIndexExpirationDate
     );
 
-    const finalValaroApagar = startIndex + 59;
-    const amountToBePaid = text.substring(
+    const finalIndexToBePaid = startIndex + 65;
+
+    const amountToBePaidForSplit = text.substring(
       finalIndexExpirationDate,
-      finalValaroApagar
+      finalIndexToBePaid
     );
+    const splitToBePais = amountToBePaidForSplit.split(',')
+    const amountToBePaidDecimal = splitToBePais[1].match(/\d+/g);
+    const amountToBePaid = `${splitToBePais[0]},${amountToBePaidDecimal}`
+    console.log("monthReferring",monthReferring)
+    console.log("expirationDate",expirationDate)
+    console.log("amountToBePaid",amountToBePaid)
+    console.log("splitToBePais",splitToBePais)
 
     return {
       monthReferring: monthReferring,

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/289</span>
+                <span class='fraction'>0/288</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/289</span>
+                <span class='fraction'>0/288</span>
             </div>
         
             
@@ -350,9 +350,7 @@
 <a name='L285'></a><a href='#L285'>285</a>
 <a name='L286'></a><a href='#L286'>286</a>
 <a name='L287'></a><a href='#L287'>287</a>
-<a name='L288'></a><a href='#L288'>288</a>
-<a name='L289'></a><a href='#L289'>289</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L288'></a><a href='#L288'>288</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -747,7 +745,7 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const retoranNumerocliente = (text:string):ClienteI =&gt;{</span>
 <span class="cstat-no" title="statement not covered" >    const startIndex = text.indexOf("NºDOCLIENTENºDAINSTALAÇÃO");</span>
-<span class="cstat-no" title="statement not covered" >    console.log(startIndex);</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (startIndex !== -1) {</span>
 <span class="cstat-no" title="statement not covered" >            // Extrair o número do cliente</span>
 <span class="cstat-no" title="statement not covered" >            const initCliente = startIndex + 25;</span>
@@ -776,7 +774,7 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const retoraReferenteVencimento = (text:string):VencimentoI =&gt;{</span>
 <span class="cstat-no" title="statement not covered" >    const startIndex = text.indexOf("ReferenteaVencimentoValorapagar(R$)");</span>
-<span class="cstat-no" title="statement not covered" >    console.log(startIndex);</span>
+<span class="cstat-no" title="statement not covered" > </span>
 <span class="cstat-no" title="statement not covered" >    if (startIndex !== -1) {</span>
 <span class="cstat-no" title="statement not covered" >            // Extrair o número do cliente</span>
 <span class="cstat-no" title="statement not covered" >            const inicioReferente = startIndex + 35</span>
@@ -813,7 +811,7 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const  extractValorres = (chave:string,nome:string,text:string) :ValorResI  =&gt;{</span>
 <span class="cstat-no" title="statement not covered" >    const startIndex = text.toString().indexOf(chave.toString());</span>
-<span class="cstat-no" title="statement not covered" >     console.log(chave.toString())</span>
+<span class="cstat-no" title="statement not covered" >    </span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >        if (startIndex !== -1) {</span>
 <span class="cstat-no" title="statement not covered" >                // Extrair o número do cliente</span>
@@ -863,7 +861,7 @@
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const  retornaContribuicaoPublica = (chave:string,text:string):ContribuicaoPublicaI =&gt;{</span>
 <span class="cstat-no" title="statement not covered" >    const startIndex = text.toString().indexOf(chave.toString());</span>
-<span class="cstat-no" title="statement not covered" >    console.log(chave)</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    if (startIndex !== -1) {</span>
 <span class="cstat-no" title="statement not covered" >            // Extrair o número do cliente</span>
@@ -892,17 +890,16 @@
 <span class="cstat-no" title="statement not covered" >     </span>
 <span class="cstat-no" title="statement not covered" >    // Expressão regular para encontrar os valores de consumo de energia elétrica</span>
 <span class="cstat-no" title="statement not covered" >    var textoSemEspacos = textPdf.replace(/\s+/g, '');</span>
-<span class="cstat-no" title="statement not covered" >    console.log(textoSemEspacos);</span>
+<span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" >    const cliente = retoranNumerocliente(textoSemEspacos)</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >     console.log(cliente)</span>
+<span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const refenteEVencimento = retoraReferenteVencimento(textoSemEspacos)</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    let valoresArray:ValorResI[] =[];</span>
 <span class="cstat-no" title="statement not covered" >    palavrasChave.map(item =&gt;{</span>
 <span class="cstat-no" title="statement not covered" >        const valores:ValorResI = extractValorres(item.chave,item.name,textoSemEspacos)</span>
-<span class="cstat-no" title="statement not covered" >        console.log(item.name,valores)</span>
 <span class="cstat-no" title="statement not covered" >        valoresArray.push(valores);</span>
 <span class="cstat-no" title="statement not covered" >    })</span>
 <span class="cstat-no" title="statement not covered" >    const contribuicaoPublica = retornaContribuicaoPublica(palavraChaveContribuicao,textoSemEspacos)</span>
@@ -934,7 +931,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-22T15:23:06.577Z
+                at 2024-05-22T18:27:29.653Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

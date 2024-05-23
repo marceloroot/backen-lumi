@@ -2,117 +2,124 @@ import { Invoice } from "../../../domain/entity/invoice";
 import { User } from "../../../domain/entity/user";
 import { InvoiceRepository } from "../../../domain/repository/invoice-repository";
 import { UserRepository } from "../../../domain/repository/user-repository";
+import { EnergyDetails, GdiDetails, IcmsDetails } from "../../../domain/subentities/invoice";
 import { ProcessPDFService, namesSpace } from "../../services/extract";
 import { getItensInvoiceI } from "../../services/interfaces";
 
-
-
-
-
-export class ExtracDataFileUseCase {
+export class ExtractDataFileUseCase {
   constructor(
-     private useRepository: UserRepository,
-     private invoceRepository: InvoiceRepository,
-     private extractService:ProcessPDFService 
+    private useRepository: UserRepository,
+    private invoiceRepository: InvoiceRepository,
+    private extractService: ProcessPDFService
   ) {}
 
-  async execute(): Promise<void> {
-    const dataFiles= await this.extractService.execute();
-    
-    dataFiles.map(async (dataFile) =>{
-       const user = await this.useRepository.findById(dataFile.client.numberClient);
-       console.log("USERDFFDDFD",user)
-       if(user === null){
-          const user  = new User({
+  async execute(): Promise<string> {
+    const dataFiles = await this.extractService.execute();
+    try {
+      dataFiles.map(async (dataFile) => {
+        const user = await this.useRepository.findById(dataFile.client.numberClient);
+
+        if (user === null) {
+          const newUser = new User({
             id: dataFile.client.numberClient,
             createdAt: new Date(),
-          })
-          await this.useRepository.create(user)
-       }
-      
-       let dataEnergia:getItensInvoiceI = {
-          name:namesSpace.energia,
-          quantity:'',
-          unityTariff:"",
-          price:"",
-          error:null
-       };
-       let dataEjeatada:getItensInvoiceI = {
-        name:namesSpace.ejetato,
-        quantity:'',
-        unityTariff:"",
-        price:"",
-        error:null
-       };
-
-       let dataICMS:getItensInvoiceI= {
-        name:namesSpace.ICMS,
-        quantity:'',
-        unityTariff:"",
-        price:"",
-        error:null
-       };
-       let dataGDI:getItensInvoiceI= {
-        name:namesSpace.GDI,
-        quantity:'',
-        unityTariff:"",
-        price:"",
-        error:null
-       };
-       
-       dataFile.getInvoices.forEach(item=>{
-        if(item.name === namesSpace.energia){
-           dataEnergia.quantity = item.quantity;
-           dataEnergia.unityTariff = item.unityTariff;
-           dataEnergia.price = item.price;
+          });
+          await this.useRepository.create(newUser);
         }
-        if(item.name === namesSpace.ejetato){
-          dataEjeatada.quantity = item.quantity;
-          dataEjeatada.unityTariff = item.unityTariff;
-          dataEjeatada.price = item.price;
-       }
-       if(item.name === namesSpace.ICMS){
-        dataICMS.quantity = item.quantity;
-        dataICMS.unityTariff = item.unityTariff;
-        dataICMS.price = item.price;
-       }
-       if(item.name === namesSpace.GDI){
-        dataGDI.quantity = item.quantity;
-        dataGDI.unityTariff = item.unityTariff;
-        dataGDI.price = item.price;
-       }
-       })
 
-            
+        let dataEnergia: getItensInvoiceI = {
+          name: namesSpace.energia,
+          quantity: '',
+          unityTariff: '',
+          price: '',
+          error: null
+        };
+        let dataEjeatada: getItensInvoiceI = {
+          name: namesSpace.ejetato,
+          quantity: '',
+          unityTariff: '',
+          price: '',
+          error: null
+        };
+        let dataICMS: getItensInvoiceI = {
+          name: namesSpace.ICMS,
+          quantity: '',
+          unityTariff: '',
+          price: '',
+          error: null
+        };
+        let dataGDI: getItensInvoiceI = {
+          name: namesSpace.GDI,
+          quantity: '',
+          unityTariff: '',
+          price: '',
+          error: null
+        };
 
-     const invoce:Invoice = new Invoice({
-      publicContribution:dataFile.publicContribution.price,
-      amountToBePaid:dataFile.dueDateAndValues.amountToBePaid,
-      expirationDate:dataFile.dueDateAndValues.expirationDate,
-      numeroInstalcao:dataFile.client.numberInstalation,
-      monthReferring:dataFile.dueDateAndValues.monthReferring,
-      userId:dataFile.client.numberClient,
-      quantityEnergy:dataEnergia.quantity,
-      unityTariffEnergy:dataEnergia.unityTariff,
-      priceEnergy:dataEnergia.price,
-      amountIcms:dataICMS.quantity,
-      unityIcms:dataICMS.unityTariff,
-      priceIcms: dataICMS.price,
-      amountOfEnergyInject:dataEjeatada.quantity,
-      unityTariffOfEnergyInject:dataEjeatada.unityTariff,
-      priceOfEnergyInject:dataEjeatada.price,
-      amountGDI:dataGDI.quantity,
-      unityGDI:dataGDI.unityTariff,
-      priceGDI:dataGDI.price,
-      path:dataFile.path
-      
-     })
-     console.log("invoice@##############",invoce)
+        dataFile.getInvoices.forEach(item => {
+          if (item.name === namesSpace.energia) {
+            dataEnergia.quantity = item.quantity;
+            dataEnergia.unityTariff = item.unityTariff;
+            dataEnergia.price = item.price;
+          }
+          if (item.name === namesSpace.ejetato) {
+            dataEjeatada.quantity = item.quantity;
+            dataEjeatada.unityTariff = item.unityTariff;
+            dataEjeatada.price = item.price;
+          }
+          if (item.name === namesSpace.ICMS) {
+            dataICMS.quantity = item.quantity;
+            dataICMS.unityTariff = item.unityTariff;
+            dataICMS.price = item.price;
+          }
+          if (item.name === namesSpace.GDI) {
+            dataGDI.quantity = item.quantity;
+            dataGDI.unityTariff = item.unityTariff;
+            dataGDI.price = item.price;
+          }
+        });
 
-       this.invoceRepository.create(invoce)
-    })
-    
+        const energyDetails: EnergyDetails = {
+          quantityEnergy: dataEnergia.quantity,
+          priceEnergy: dataEnergia.price,
+          unityTariffEnergy: dataEnergia.unityTariff,
+          amountOfEnergyInject: dataEjeatada.quantity,
+          priceOfEnergyInject: dataEjeatada.price,
+          unityTariffOfEnergyInject: dataEjeatada.unityTariff,
+        };
 
+        const icmsDetails: IcmsDetails = {
+          amountIcms: dataICMS.quantity,
+          priceIcms: dataICMS.price,
+          unityIcms: dataICMS.unityTariff,
+        };
+
+        const gdiDetails: GdiDetails = {
+          amountGDI: dataGDI.quantity,
+          priceGDI: dataGDI.price,
+          unityGDI: dataGDI.unityTariff,
+        };
+
+        const invoice: Invoice = new Invoice({
+          userId: dataFile.client.numberClient,
+          numeroInstalcao: dataFile.client.numberInstalation,
+          monthReferring: dataFile.dueDateAndValues.monthReferring,
+          expirationDate: dataFile.dueDateAndValues.expirationDate,
+          amountToBePaid: dataFile.dueDateAndValues.amountToBePaid,
+          publicContribution: dataFile.publicContribution.price,
+          path: dataFile.path,
+          energyDetails: energyDetails,
+          icmsDetails: icmsDetails,
+          gdiDetails: gdiDetails,
+        });
+
+        await this.invoiceRepository.create(invoice);
+      });
+
+      return "Dados Inseridos";
+    } catch (err: any) {
+      console.error("Erro ao inserir dados:", err);
+      return "Erro ao inserir Dados";
+    }
   }
 }
-
