@@ -2,7 +2,11 @@ import { Invoice } from "../../../domain/entity/invoice";
 import { User } from "../../../domain/entity/user";
 import { InvoiceRepository } from "../../../domain/repository/invoice-repository";
 import { UserRepository } from "../../../domain/repository/user-repository";
-import { EnergyDetails, GdiDetails, IcmsDetails } from "../../../domain/subentities/invoice";
+import {
+  EnergyDetails,
+  GdiDetails,
+  IcmsDetails,
+} from "../../../domain/subentities/invoice";
 import { ProcessPDFService, namesSpace } from "../../services/extract";
 import { getItensInvoiceI } from "../../services/interfaces";
 
@@ -16,47 +20,49 @@ export class ExtractDataFileUseCase {
   async execute(): Promise<string> {
     const dataFiles = await this.extractService.execute();
     try {
-      dataFiles.map(async (dataFile) => {
-        const user = await this.useRepository.findById(dataFile.client.numberClient);
+      for (const dataFile of dataFiles) {
+        const userFindById = await this.useRepository.findById(
+          dataFile.client.numberClient
+        );
 
-        if (user === null) {
+        if (!userFindById) {
           const newUser = new User({
             id: dataFile.client.numberClient,
             createdAt: new Date(),
           });
-          await this.useRepository.create(newUser);
+          const user = await this.useRepository.create(newUser);
+          console.log("User do Extract", user);
         }
-
         let dataEnergia: getItensInvoiceI = {
           name: namesSpace.energia,
-          quantity: '',
-          unityTariff: '',
-          price: '',
-          error: null
+          quantity: "",
+          unityTariff: "",
+          price: "",
+          error: null,
         };
         let dataEjeatada: getItensInvoiceI = {
           name: namesSpace.ejetato,
-          quantity: '',
-          unityTariff: '',
-          price: '',
-          error: null
+          quantity: "",
+          unityTariff: "",
+          price: "",
+          error: null,
         };
         let dataICMS: getItensInvoiceI = {
           name: namesSpace.ICMS,
-          quantity: '',
-          unityTariff: '',
-          price: '',
-          error: null
+          quantity: "",
+          unityTariff: "",
+          price: "",
+          error: null,
         };
         let dataGDI: getItensInvoiceI = {
           name: namesSpace.GDI,
-          quantity: '',
-          unityTariff: '',
-          price: '',
-          error: null
+          quantity: "",
+          unityTariff: "",
+          price: "",
+          error: null,
         };
 
-        dataFile.getInvoices.forEach(item => {
+        dataFile.getInvoices.forEach((item) => {
           if (item.name === namesSpace.energia) {
             dataEnergia.quantity = item.quantity;
             dataEnergia.unityTariff = item.unityTariff;
@@ -97,12 +103,12 @@ export class ExtractDataFileUseCase {
         const gdiDetails: GdiDetails = {
           amountGDI: dataGDI.quantity,
           priceGDI: dataGDI.price,
-          unityGDI: dataGDI.unityTariff,
+          unityGDI: dataGDI.unityTariff ? dataGDI.unityTariff : "",
         };
 
         const invoice: Invoice = new Invoice({
           userId: dataFile.client.numberClient,
-          numeroInstalcao: dataFile.client.numberInstalation,
+          installationNumber: dataFile.client.numberInstalation,
           monthReferring: dataFile.dueDateAndValues.monthReferring,
           expirationDate: dataFile.dueDateAndValues.expirationDate,
           amountToBePaid: dataFile.dueDateAndValues.amountToBePaid,
@@ -114,10 +120,10 @@ export class ExtractDataFileUseCase {
         });
 
         await this.invoiceRepository.create(invoice);
-      });
+      }
 
       return "Dados Inseridos";
-    } catch (err: any) {
+    } catch (err) {
       console.error("Erro ao inserir dados:", err);
       return "Erro ao inserir Dados";
     }

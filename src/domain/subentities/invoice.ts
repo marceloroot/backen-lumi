@@ -22,7 +22,7 @@ export type EnergyDetails = {
   
   export type InvoiceProps = {
     userId: string;
-    numeroInstalcao: string;
+    installationNumber: string;
     monthReferring: string;
     expirationDate: string;
     amountToBePaid: string;

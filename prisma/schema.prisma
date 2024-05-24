@@ -12,40 +12,42 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id        String      @id 
+  id        String   @id
   createdAt DateTime @default(now())
-  invoceis Invoce[]
+  invoceis  Invoice[]
+
   @@map("user")
 }
 
-model Invoce{
-    id        String      @id @default(uuid()) 
-    userId       String   @map("user_id")
-    numeroInstalcao  String
-    monthReferring  String
-    expirationDate  String
-    amountToBePaid  String
+model Invoice {
+  id                 String @id @default(uuid())
+  installationNumber String
+  monthReferring     String
+  expirationDate     String
+  amountToBePaid     String
 
-    quantityEnergy String?
-    priceEnergy String?
-    unityTariffEnergy String?
+  quantityEnergy    String?
+  priceEnergy       String?
+  unityTariffEnergy String?
 
-    amountOfEnergyInject String?
-    priceOfEnergyInject String?
-    unityTariffOfEnergyInject String?
+  amountOfEnergyInject      String?
+  priceOfEnergyInject       String?
+  unityTariffOfEnergyInject String?
 
-    amountIcms String?
-    priceIcms String?
-    unityIcms String?
+  amountIcms String?
+  priceIcms  String?
+  unityIcms  String?
 
-    amountGDI String?
-    priceGDI String?
-    unityGDI String?
-    publicContribution String
-    path String
+  amountGDI          String?
+  priceGDI           String?
+  unityGDI           String?
+  publicContribution String
+  path               String
 
-     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String @map("user_id")
 
-    @@map("invoice")
+  @@map("invoice")
 }

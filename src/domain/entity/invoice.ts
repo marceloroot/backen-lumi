@@ -1,14 +1,19 @@
 import { InvoiceProps } from "../subentities/invoice";
+import { User } from "./user";
 
 export class Invoice {
-    constructor(private props: InvoiceProps) {}
+
+    constructor(
+      private props: InvoiceProps,
+      private _user?: User
+    ) {}
   
     get userId() {
       return this.props.userId;
     }
   
-    get numeroInstalcao() {
-      return this.props.numeroInstalcao;
+    get installationNumber() {
+      return this.props.installationNumber;
     }
   
     get monthReferring() {
@@ -41,6 +46,13 @@ export class Invoice {
   
     get gdiDetails() {
       return this.props.gdiDetails;
+    }
+    get user() {
+      return this._user; 
+    }
+  
+    set user(user: User | undefined) {
+      this._user = user;
     }
   }
   

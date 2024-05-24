@@ -9,8 +9,7 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "invoice" (
     "id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
-    "numeroInstalcao" TEXT NOT NULL,
+    "installationNumber" TEXT NOT NULL,
     "monthReferring" TEXT NOT NULL,
     "expirationDate" TEXT NOT NULL,
     "amountToBePaid" TEXT NOT NULL,
@@ -28,6 +27,7 @@ CREATE TABLE "invoice" (
     "unityGDI" TEXT,
     "publicContribution" TEXT NOT NULL,
     "path" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "invoice_pkey" PRIMARY KEY ("id")
 );

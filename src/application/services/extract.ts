@@ -163,8 +163,6 @@ const getNumberClient = (text: string): ClientI => {
 
 const getReferenceData = (text: string): DueDatesAndValuesI => {
   const startIndex = text.indexOf(keyNameReferenceData);
-  console.log(text)
-
   if (startIndex !== -1) {
     // Extrair o número do cliente
     const initReference = startIndex + keyNameReferenceData.length;
@@ -173,15 +171,12 @@ const getReferenceData = (text: string): DueDatesAndValuesI => {
       initReference,
       finalIndexMonthReferring
     );
-
     const finalIndexExpirationDate = startIndex + 53;
     const expirationDate = text.substring(
       finalIndexMonthReferring,
       finalIndexExpirationDate
     );
-
     const finalIndexToBePaid = startIndex + 65;
-
     const amountToBePaidForSplit = text.substring(
       finalIndexExpirationDate,
       finalIndexToBePaid
@@ -189,10 +184,7 @@ const getReferenceData = (text: string): DueDatesAndValuesI => {
     const splitToBePais = amountToBePaidForSplit.split(',')
     const amountToBePaidDecimal = splitToBePais[1].match(/\d+/g);
     const amountToBePaid = `${splitToBePais[0]},${amountToBePaidDecimal}`
-    console.log("monthReferring",monthReferring)
-    console.log("expirationDate",expirationDate)
-    console.log("amountToBePaid",amountToBePaid)
-    console.log("splitToBePais",splitToBePais)
+
 
     return {
       monthReferring: monthReferring,

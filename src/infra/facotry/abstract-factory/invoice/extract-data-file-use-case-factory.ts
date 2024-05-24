@@ -1,5 +1,5 @@
 import { ProcessPDFService } from "../../../../application/services/extract";
-import { ExtractDataFileUseCase } from "../../../../application/useCase/invoce/extract-data-file-use-case";
+import { ExtractDataFileUseCase } from "../../../../application/useCase/invoice/extract-data-file-and-saved-use-case";
 
 import { InvoiceRepositoryDataBase } from "../../../repositore-data-base-prisma/invoice-repository-data-base";
 import { UserRepositoryDataBase } from "../../../repositore-data-base-prisma/user-repository-data-base";
@@ -15,9 +15,5 @@ export class ExtractDataFileUseCaseFactory {
     return new ExtractDataFileUseCase(useRepository,invoceRepository,extractService);
    
   }
-
- 
-
-
  
 }

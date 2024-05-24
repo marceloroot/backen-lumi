@@ -16,16 +16,20 @@ export class UserRepositoryDataBase implements UserRepository{
             createdAt: userPrisma.createdAt
           })
     }
-   async findById(id: string): Promise<User | null> {
+   async findById(id: string): Promise<User | undefined> {
       const userPrisma = await this.prismaClient.user.findUnique({
         where:{
           id:id
         }
       })
-      if(!userPrisma) return null
+
+      if(!userPrisma) {
+        return undefined 
+      }else{
       return new User({
         id:userPrisma.id,
         createdAt: userPrisma.createdAt
       })
+    }
     }
 }
