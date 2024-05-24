@@ -15,8 +15,8 @@ describe("Testa a camada Use Case extract", () => {
       invoceRepository
     );
     const reponseInvoces = await useCaseDashBoard.execute();
-    console.log(reponseInvoces.invoices[0].user);
-    expect(reponseInvoces.invoices.length > 0).toBe(true);
+    console.log(reponseInvoces.invoicesEnergia[0]);
+    expect(reponseInvoces.invoicesEnergia.length > 0).toBe(true);
   });
   test("Deveria busacar os invocies para dashboard referente ao Factory ", async function () {
     const extractDataFileDashBoardFactory = ExtractDataFileDashBoardFactory.ExtractDataFileDashBoardFactory(
@@ -25,8 +25,8 @@ describe("Testa a camada Use Case extract", () => {
     const invocesDashBorad = await extractDataFileDashBoardFactory.execute(
       "7005400387"
     );
-    console.log(invocesDashBorad.invoices[0].user);
-    expect(invocesDashBorad.invoices.length > 0).toBe(true);
+    console.log(invocesDashBorad.invoicesEnergia[0]);
+    expect(invocesDashBorad.invoicesEnergia.length > 0).toBe(true);
   });
 
   test("Deveria criar um invoice no repositorio", async function () {
