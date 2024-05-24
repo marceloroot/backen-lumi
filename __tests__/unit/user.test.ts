@@ -19,8 +19,6 @@ test("Deveria criar um usuario no repositorio", async function(){
 });
 
 test("Deveria buscar um por id usuario no repositorio", async function(){
-
-
  const repositoryDataBase = new  UserRepositoryDataBase(connectionPrisma)
  const userRepository = await repositoryDataBase.findById('7005400387')
  console.log(userRepository)

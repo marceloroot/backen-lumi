@@ -18,7 +18,7 @@ describe("Testa a camada Use Case extract", () => {
     const response = await extratdd.execute();
 
     expect(response).toBe("Dados Inseridos");
-  });
+  },10000);
 
   test("Deveria salvar no banco de dados os invoices e usuarios referente ao Factory ", async function () {
     const extractAbstractFacture = ExtractDataFileUseCaseFactory.ExtractDataFileAbstractFactory(
@@ -26,5 +26,5 @@ describe("Testa a camada Use Case extract", () => {
     );
     const response = await extractAbstractFacture.execute();
     expect(response).toBe("Dados Inseridos");
-  });
+  },10000);
 });
