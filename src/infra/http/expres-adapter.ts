@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import path from 'path';
 import cors from 'cors'
 import express, { Errback, Request, Response } from 'express'
 
@@ -17,6 +18,8 @@ app.use(router)
 app.use(routerInvoice)
 app.use(routerUser)
 
+//poderia expoertar o static para acessar de uma rota e criar um middleware para bloquear o acesso indevido, mas deixei exposto.
+app.use(express.static(path.join(__dirname, '../../../arquivos')));
 app.use((_: Request, res: Response) => {
   res.status(404).json({ message: 'Page Not Found' })
 })

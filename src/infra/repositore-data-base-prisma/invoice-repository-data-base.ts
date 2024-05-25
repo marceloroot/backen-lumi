@@ -63,7 +63,7 @@ export class InvoiceRepositoryDataBase implements InvoiceRepository {
     return invoices;
   }
  async findAll(skip: number, take: number,userId?: string): Promise<Invoice[]> {
-       const page = (skip == 0) ? skip :  skip * take;
+       const page = ((skip == 0) ? skip :  skip * take);
       const invoicePrisma  = await this.prismaClient.invoice.findMany({
         where: userId ? { userId } : {},
         take:take,

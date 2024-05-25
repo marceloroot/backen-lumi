@@ -28,11 +28,8 @@ export const getById = async (req: Request, res: Response): Promise<void> =>  {
       if (!id) {
           id = undefined;
       }
-      const skip = parseInt(req.query.skip as string) || 1;
+      const skip = parseInt(req.query.skip as string) || 0;
       const take = parseInt(req.query.take as string) || 10;
-      console.log("skip",skip)
-      console.log("take",take)
-
       const invoceFactory = FetchAllInvoiceFactory.FetchAllUserAbstractFacotory(connectionPrisma);
       const invoices = await invoceFactory.execute(skip,take,id);
    
