@@ -74,4 +74,17 @@ export class InvoiceRepositoryDataBase implements InvoiceRepository {
       const invoces = invoicePrisma.map(InvoiceMapper.toEntity)
       return invoces;
   }
+
+  async findExist(userId: string, installationNumber: string, monthReferring: string): Promise<Invoice[]> {
+      const invocePrisma = await this.prismaClient.invoice.findMany({
+        where:{
+          userId: userId,
+          installationNumber: installationNumber,
+          monthReferring: monthReferring
+        }
+      })
+      const invoice = invocePrisma.map(InvoiceMapper.invoceMapper)
+      console.log("INVOCEEEEEE###",invoice)
+      return invoice;
+  }
 }

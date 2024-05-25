@@ -7,6 +7,7 @@ import {
   GdiDetails,
   IcmsDetails,
 } from "../../../domain/subentities/invoice";
+import { DeleteFile } from "../../services/delele-arquivo";
 import { ProcessPDFService, namesSpace } from "../../services/extract";
 import { getItensInvoiceI } from "../../services/interfaces";
 
@@ -21,17 +22,19 @@ export class ExtractDataFileUseCase {
     const dataFiles = await this.extractService.execute();
     try {
       for (const dataFile of dataFiles) {
+       
+       if(dataFile.client.numberClient){
+  
         const userFindById = await this.useRepository.findById(
           dataFile.client.numberClient
         );
-
+       
         if (!userFindById) {
           const newUser = new User({
             id: dataFile.client.numberClient,
             createdAt: new Date(),
           });
-          const user = await this.useRepository.create(newUser);
-          console.log("User do Extract", user);
+          await this.useRepository.create(newUser);
         }
         let dataEnergia: getItensInvoiceI = {
           name: namesSpace.energia,
@@ -118,11 +121,19 @@ export class ExtractDataFileUseCase {
           icmsDetails: icmsDetails,
           gdiDetails: gdiDetails,
         });
+        const invoiceExist = await this.invoiceRepository.findExist(dataFile.client.numberClient,dataFile.client.numberInstalation,dataFile.dueDateAndValues.monthReferring);
+   
+        if(invoiceExist.length <= 0) await this.invoiceRepository.create(invoice);
+        
+       }else{
 
-        await this.invoiceRepository.create(invoice);
+      
+        DeleteFile(dataFile.path)
+       }
       }
 
       return "Dados Inseridos";
+
     } catch (err) {
       console.error("Erro ao inserir dados:", err);
       return "Erro ao inserir Dados";
