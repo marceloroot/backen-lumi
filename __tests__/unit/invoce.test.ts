@@ -2,6 +2,7 @@ import { connectionPrisma } from "../../src/infra/prisma/prisma";
 import { ExtractDataFileDashBoardUseCase } from "../../src/application/useCase/dashboard/extract-data-file-dashboard-use-case";
 import { InvoiceRepositoryDataBase } from "../../src/infra/repositore-data-base-prisma/invoice-repository-data-base";
 import { ExtractDataFileDashBoardFactory } from "../../src/infra/facotry/abstract-factory/invoice/extract-data-file-dashboard-factory";
+import { FetchAllInvoiceFactory } from "../../src/infra/facotry/abstract-factory/invoice/fetch-all-invoice-factory";
 import {
   EnergyDetails,
   GdiDetails,
@@ -15,7 +16,6 @@ describe("Testa a camada Use Case extract", () => {
       invoceRepository
     );
     const reponseInvoces = await useCaseDashBoard.execute();
-    console.log(reponseInvoces.invoicesEnergia[0]);
     expect(reponseInvoces.invoicesEnergia.length > 0).toBe(true);
   });
   test("Deveria busacar os invocies para dashboard referente ao Factory ", async function () {
@@ -25,7 +25,6 @@ describe("Testa a camada Use Case extract", () => {
     const invocesDashBorad = await extractDataFileDashBoardFactory.execute(
       "7005400387"
     );
-    console.log(invocesDashBorad.invoicesEnergia[0]);
     expect(invocesDashBorad.invoicesEnergia.length > 0).toBe(true);
   });
 
@@ -67,8 +66,14 @@ describe("Testa a camada Use Case extract", () => {
     const fakeInvoice = new Invoice(invoiceProps);
     const repositoryDataBase = new InvoiceRepositoryDataBase(connectionPrisma);
     const invoiceRepository = await repositoryDataBase.create(fakeInvoice);
-    console.log(fakeInvoice);
+   
 
     expect(invoiceRepository.userId).toBe(fakeInvoice.userId);
   });
+
+  test("Deveria retornal todos o invoces da factory",async function(){
+    const invoceFactory = FetchAllInvoiceFactory.FetchAllUserAbstractFacotory(connectionPrisma);
+    const invoices = await invoceFactory.execute(2,10);
+    expect(invoices.length>0).toBe(true);
+  })
 });

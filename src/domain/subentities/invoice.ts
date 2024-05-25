@@ -21,6 +21,7 @@ export type EnergyDetails = {
   };
   
   export type InvoiceProps = {
+    id?:string;
     userId: string;
     installationNumber: string;
     monthReferring: string;

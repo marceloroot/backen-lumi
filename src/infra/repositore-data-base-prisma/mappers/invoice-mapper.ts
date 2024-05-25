@@ -7,6 +7,7 @@ import { User } from "../../../domain/entity/user";
 export class InvoiceMapper {
     static toEntity(data: InvoicePrisma | (InvoicePrisma & { user: User })): Invoice {
         const invoiceProps = {
+          id:data.id,
           userId: data.userId,
           installationNumber: data.installationNumber,
           monthReferring: data.monthReferring,
@@ -41,6 +42,7 @@ export class InvoiceMapper {
   
   static invoceMapper(data: InvoicePrisma): Invoice {
     return new Invoice({
+      id:data.id,
       userId: data.userId,
       installationNumber: data.installationNumber,
       monthReferring: data.monthReferring,

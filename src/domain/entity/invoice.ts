@@ -7,7 +7,9 @@ export class Invoice {
       private props: InvoiceProps,
       private _user?: User
     ) {}
-  
+    get id() {
+      return this.props.id;
+    }
     get userId() {
       return this.props.userId;
     }
