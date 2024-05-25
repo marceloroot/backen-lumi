@@ -8,25 +8,18 @@ test("Deve testar a API (GET /)", async function(){
    expect(response.status).toBe(200)
 })
 
-test("Deve testar a API (GET /api/employees)", async function(){
+test("Deve testar a API (GET /api/invoice)", async function(){
    const response = await axios({
-    url:"http://localhost:3001/api/employees?page=1&size=20&sortorder=asc",
+    url:"http://localhost:3001/api/invoice",
     method:"get",
    })
    expect(response.status).toBe(200)
 })
 
-test("Deve testar a API (POST /api/employees)", async function(){
+test("Deve testar a API (POST /api/user)", async function(){
    const response = await axios({
-    url:"http://localhost:3001/api/employees?page=3&size=2",
-    method:"post",
-    data: {
-      date: '2022-01-02',
-      department: 'Administrativo',
-      id:"5555",
-      name:"Pedro Santos",
-      role:"Administrador",
-    }
+    url:"http://localhost:3001/api/user",
+    method:"GET",
    })
    expect(response.status).toBe(200)
 })

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.15% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/65</span>
+                <span class='fraction'>0/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.15% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/65</span>
+                <span class='fraction'>0/65</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -128,49 +128,7 @@
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -193,49 +151,91 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PrismaClient } from "@prisma/client";
-import { Invoice } from "../../domain/entity/invoice";
-import { InvoiceRepository } from "../../domain/repository/invoice-repository";
-import { InvoiceMapper } from "./mappers/invoice-mapper";
-import { UserMapper } from "./mappers/user-mapper";
-export class InvoiceRepositoryDataBase implements InvoiceRepository {
-  constructor(private prismaClient: PrismaClient) {}
-&nbsp;
-  async create(invoice: Invoice): Promise&lt;Invoice&gt; {
-    const invoicePrismaCreate = await this.prismaClient.invoice.create({
-      data: {
-        userId: invoice.userId,
-        installationNumber: invoice.installationNumber,
-        monthReferring: invoice.monthReferring,
-        expirationDate: invoice.expirationDate,
-        amountToBePaid: invoice.amountToBePaid,
-        publicContribution: invoice.publicContribution,
-        path: invoice.path,
-&nbsp;
-        // Energy details
-        quantityEnergy: invoice.energyDetails?.quantityEnergy,
-        priceEnergy: invoice.energyDetails?.priceEnergy,
-        unityTariffEnergy: invoice.energyDetails?.unityTariffEnergy,
-        amountOfEnergyInject: invoice.energyDetails?.amountOfEnergyInject,
-        priceOfEnergyInject: invoice.energyDetails?.priceOfEnergyInject,
-        unityTariffOfEnergyInject: invoice.energyDetails?.unityTariffOfEnergyInject,
-&nbsp;
-        // ICMS details
-        amountIcms: invoice.icmsDetails?.amountIcms,
-        priceIcms: invoice.icmsDetails?.priceIcms,
-        unityIcms: invoice.icmsDetails?.unityIcms,
-&nbsp;
-        // GDI details
-        amountGDI: invoice.gdiDetails?.amountGDI,
-        priceGDI: invoice.gdiDetails?.priceGDI,
-        unityGDI: invoice.gdiDetails?.unityGDI,
-        
-      },
-    });
-    return InvoiceMapper.invoceMapper(invoicePrismaCreate)
-  }
-  async findAllUser(userId?: string): Promise&lt;Invoice[]&gt; {
-    const invoicesWithU<span class="fstat-no" title="function not covered" >ser = await this.prismaClient.invoice.findMany({</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { PrismaClient } from "@prisma/client";</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { Invoice } from "../../domain/entity/invoice";</span>
+<span class="cstat-no" title="statement not covered" >import { InvoiceRepository } from "../../domain/repository/invoice-repository";</span>
+<span class="cstat-no" title="statement not covered" >import { InvoiceMapper } from "./mappers/invoice-mapper";</span>
+<span class="cstat-no" title="statement not covered" >import { UserMapper } from "./mappers/user-mapper";</span>
+<span class="cstat-no" title="statement not covered" >export class InvoiceRepositoryDataBase implements InvoiceRepository {</span>
+<span class="cstat-no" title="statement not covered" >  constructor(private prismaClient: PrismaClient) {}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  async create(invoice: Invoice): Promise&lt;Invoice&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const invoicePrismaCreate = await this.prismaClient.invoice.create({</span>
+<span class="cstat-no" title="statement not covered" >      data: {</span>
+<span class="cstat-no" title="statement not covered" >        userId: invoice.userId,</span>
+<span class="cstat-no" title="statement not covered" >        installationNumber: invoice.installationNumber,</span>
+<span class="cstat-no" title="statement not covered" >        monthReferring: invoice.monthReferring,</span>
+<span class="cstat-no" title="statement not covered" >        expirationDate: invoice.expirationDate,</span>
+<span class="cstat-no" title="statement not covered" >        amountToBePaid: invoice.amountToBePaid,</span>
+<span class="cstat-no" title="statement not covered" >        publicContribution: invoice.publicContribution,</span>
+<span class="cstat-no" title="statement not covered" >        path: invoice.path,</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        // Energy details</span>
+<span class="cstat-no" title="statement not covered" >        quantityEnergy: invoice.energyDetails?.quantityEnergy,</span>
+<span class="cstat-no" title="statement not covered" >        priceEnergy: invoice.energyDetails?.priceEnergy,</span>
+<span class="cstat-no" title="statement not covered" >        unityTariffEnergy: invoice.energyDetails?.unityTariffEnergy,</span>
+<span class="cstat-no" title="statement not covered" >        amountOfEnergyInject: invoice.energyDetails?.amountOfEnergyInject,</span>
+<span class="cstat-no" title="statement not covered" >        priceOfEnergyInject: invoice.energyDetails?.priceOfEnergyInject,</span>
+<span class="cstat-no" title="statement not covered" >        unityTariffOfEnergyInject: invoice.energyDetails?.unityTariffOfEnergyInject,</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        // ICMS details</span>
+<span class="cstat-no" title="statement not covered" >        amountIcms: invoice.icmsDetails?.amountIcms,</span>
+<span class="cstat-no" title="statement not covered" >        priceIcms: invoice.icmsDetails?.priceIcms,</span>
+<span class="cstat-no" title="statement not covered" >        unityIcms: invoice.icmsDetails?.unityIcms,</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        // GDI details</span>
+<span class="cstat-no" title="statement not covered" >        amountGDI: invoice.gdiDetails?.amountGDI,</span>
+<span class="cstat-no" title="statement not covered" >        priceGDI: invoice.gdiDetails?.priceGDI,</span>
+<span class="cstat-no" title="statement not covered" >        unityGDI: invoice.gdiDetails?.unityGDI,</span>
+<span class="cstat-no" title="statement not covered" >        </span>
+<span class="cstat-no" title="statement not covered" >      },</span>
+<span class="cstat-no" title="statement not covered" >    });</span>
+<span class="cstat-no" title="statement not covered" >    return InvoiceMapper.invoceMapper(invoicePrismaCreate)</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >  async findAllUser(userId?: string): Promise&lt;Invoice[]&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    const invoicesWithUser = await this.prismaClient.invoice.findMany({</span>
 <span class="cstat-no" title="statement not covered" >      where: userId ? { userId } : {},</span>
 <span class="cstat-no" title="statement not covered" >      include: {</span>
 <span class="cstat-no" title="statement not covered" >        user: true,</span>
@@ -265,7 +265,7 @@ export class InvoiceRepositoryDataBase implements InvoiceRepository {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-24T03:49:25.531Z
+                at 2024-05-24T20:14:40.482Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -12,7 +12,8 @@ export type InvoiceEnergia = {
     instaltionNumber:string;
     energyRecent:string;
     priceRecent:string;
-    
+    totalEnergy:number;
+    totalPrice:number;    
     
    };
   export type MonetaryValues = {

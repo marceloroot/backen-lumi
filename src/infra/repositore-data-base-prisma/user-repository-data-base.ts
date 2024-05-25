@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "../../domain/entity/user";
 import { UserRepository } from "../../domain/repository/user-repository";
+import { UserMapper } from "./mappers/user-mapper";
 
 export class UserRepositoryDataBase implements UserRepository{
     constructor(private prismaClient: PrismaClient){}
@@ -31,5 +32,11 @@ export class UserRepositoryDataBase implements UserRepository{
         createdAt: userPrisma.createdAt
       })
     }
+    }
+
+    async findAll(): Promise<User[]> {
+      const usersPrisma = await this.prismaClient.user.findMany();
+      const users = usersPrisma.map(UserMapper.invoceMapper) 
+      return users;
     }
 }

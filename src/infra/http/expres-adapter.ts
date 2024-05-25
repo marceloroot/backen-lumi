@@ -4,6 +4,7 @@ import express, { Errback, Request, Response } from 'express'
 
 import router from '../routes/RoutesEmployee'
 import routerInvoice from '../routes/routes-invoice'
+import routerUser from '../routes/routes-user'
 
 
 const app = express()
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(router)
 app.use(routerInvoice)
+app.use(routerUser)
 
 app.use((_: Request, res: Response) => {
   res.status(404).json({ message: 'Page Not Found' })
