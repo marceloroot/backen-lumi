@@ -19,6 +19,7 @@ export class ExtractDataFileUseCase {
   ) {}
 
   async execute(): Promise<string> {
+    //REFATORA ESTA QUEBRANDO O PRINCIOPIO D do Solid 
     const dataFiles = await this.extractService.execute();
     try {
       for (const dataFile of dataFiles) {
@@ -122,12 +123,10 @@ export class ExtractDataFileUseCase {
           gdiDetails: gdiDetails,
         });
         const invoiceExist = await this.invoiceRepository.findExist(dataFile.client.numberClient,dataFile.client.numberInstalation,dataFile.dueDateAndValues.monthReferring);
-   
-        if(invoiceExist.length <= 0) await this.invoiceRepository.create(invoice);
         
-       }else{
-
+        if(invoiceExist.length <= 0) await this.invoiceRepository.create(invoice);
       
+       }else{
         DeleteFile(dataFile.path)
        }
       }
