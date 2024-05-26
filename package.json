@@ -10,7 +10,8 @@
     "start:watch": "tsx watch ./src/start/server.ts",
     "lint:fix": "eslint --fix --ext .js,.mjs,.ts,.json .",
     "test": "jest",
-    "extract":"tsx ./src/infra/cron-job/extraction.ts"
+    "extract":"tsx ./src/infra/cron-job/extraction.ts",
+    "start:migrate:prod": "npx prisma migrate dev --name init && npm run start:dev"
   },
   "keywords": [],
   "author": "",
