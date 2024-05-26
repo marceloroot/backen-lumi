@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for infra/controller/invoice-controller.ts</title>
+    <title>Code coverage report for infra/routes/routes-upload.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">infra/controller</a> invoice-controller.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">infra/routes</a> routes-upload.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/43</span>
+                <span class='fraction'>0/38</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/43</span>
+                <span class='fraction'>0/38</span>
             </div>
         
             
@@ -103,9 +103,7 @@
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -143,53 +141,49 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { Request, Response } from 'express';</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { StatusCodes } from "http-status-codes";</span>
-<span class="cstat-no" title="statement not covered" >import { connectionPrisma } from '../prisma/prisma';</span>
-<span class="cstat-no" title="statement not covered" >import { ExtractDataFileDashBoardFactory } from '../facotry/abstract-factory/invoice/extract-data-file-dashboard-factory';</span>
-<span class="cstat-no" title="statement not covered" >import { FetchAllInvoiceFactory } from '../facotry/abstract-factory/invoice/fetch-all-invoice-factory';</span>
-<span class="cstat-no" title="statement not covered" >export const getById = async (req: Request, res: Response): Promise&lt;void&gt; =&gt;  {</span>
-<span class="cstat-no" title="statement not covered" >    try{</span>
-<span class="cstat-no" title="statement not covered" >        let id: string | undefined = req.params.id; </span>
-<span class="cstat-no" title="statement not covered" >        if (!id) {</span>
-<span class="cstat-no" title="statement not covered" >            id = undefined;</span>
-<span class="cstat-no" title="statement not covered" >        }</span>
-<span class="cstat-no" title="statement not covered" >      const extractDataFileDashBoardFactory = ExtractDataFileDashBoardFactory.ExtractDataFileDashBoardFactory(</span>
-<span class="cstat-no" title="statement not covered" >        connectionPrisma</span>
-<span class="cstat-no" title="statement not covered" >      );</span>
-<span class="cstat-no" title="statement not covered" >      const invocesDashBorad = await extractDataFileDashBoardFactory.execute(id);</span>
-<span class="cstat-no" title="statement not covered" >      res.status(StatusCodes.OK).json(invocesDashBorad);</span>
-<span class="cstat-no" title="statement not covered" >    } catch (error:any) {</span>
-<span class="cstat-no" title="statement not covered" >        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({</span>
-<span class="cstat-no" title="statement not covered" >          errors: error.message</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >   </span>
-<span class="cstat-no" title="statement not covered" >  };</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { Router } from 'express';</span></span></span>
+<span class="cstat-no" title="statement not covered" >const multer  = require('multer')</span>
+<span class="cstat-no" title="statement not covered" >import { extract, upLoad } from '../controller/upload-controller';</span>
+<span class="cstat-no" title="statement not covered" >// Multer Configuração</span>
+<span class="cstat-no" title="statement not covered" >const storage = multer.diskStorage({</span>
+<span class="cstat-no" title="statement not covered" >  destination: function (req:any, file:any, cb:any) {</span>
+<span class="cstat-no" title="statement not covered" >    cb(null, 'arquivos/');</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  filename: function (req:any, file:any, cb:any) {</span>
+<span class="cstat-no" title="statement not covered" >    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);</span>
+<span class="cstat-no" title="statement not covered" >    cb(null, file.fieldname + '-' + uniqueSuffix + '.pdf');</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >});</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  export const getAll = async (req: Request, res: Response): Promise&lt;void&gt; =&gt;  {</span>
-<span class="cstat-no" title="statement not covered" >    try{</span>
-<span class="cstat-no" title="statement not covered" >      let id: string | undefined =  req.query.id ? req.query.id.toString() : undefined;</span>
-<span class="cstat-no" title="statement not covered" >      if (!id) {</span>
-<span class="cstat-no" title="statement not covered" >          id = undefined;</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >      const skip = parseInt(req.query.skip as string) || 0;</span>
-<span class="cstat-no" title="statement not covered" >      const take = parseInt(req.query.take as string) || 10;</span>
-<span class="cstat-no" title="statement not covered" >      const invoceFactory = FetchAllInvoiceFactory.FetchAllUserAbstractFacotory(connectionPrisma);</span>
-<span class="cstat-no" title="statement not covered" >      const invoices = await invoceFactory.execute(skip,take,id);</span>
-<span class="cstat-no" title="statement not covered" >   </span>
-<span class="cstat-no" title="statement not covered" >      res.status(StatusCodes.OK).json(invoices);</span>
-<span class="cstat-no" title="statement not covered" >    } catch (error:any) {</span>
-<span class="cstat-no" title="statement not covered" >        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({</span>
-<span class="cstat-no" title="statement not covered" >          errors: error.message</span>
-<span class="cstat-no" title="statement not covered" >        });</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-<span class="cstat-no" title="statement not covered" >   </span>
-<span class="cstat-no" title="statement not covered" >  };</span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >const fileFilter = (req: any, file: any, cb: any) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  if (file.mimetype === 'application/pdf') {</span>
+<span class="cstat-no" title="statement not covered" >    cb(null, true);</span>
+<span class="cstat-no" title="statement not covered" >  } else {</span>
+<span class="cstat-no" title="statement not covered" >    cb(new Error('Permitidos somente arquivos pdf'), false);</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const upload = multer({ </span>
+<span class="cstat-no" title="statement not covered" >  storage: storage,</span>
+<span class="cstat-no" title="statement not covered" >  fileFilter: fileFilter</span>
+<span class="cstat-no" title="statement not covered" >});</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >const router = Router();</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >router.get('/extract', extract)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >router.post('/upload', upload.single('file'), upLoad)</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export default router;  </span>
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

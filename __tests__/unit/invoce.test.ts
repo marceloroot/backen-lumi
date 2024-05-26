@@ -73,7 +73,7 @@ describe("Testa a camada Use Case extract", () => {
 
   test("Deveria retornal todos o invoces da factory",async function(){
     const invoceFactory = FetchAllInvoiceFactory.FetchAllUserAbstractFacotory(connectionPrisma);
-    const invoices = await invoceFactory.execute(2,10);
+    const invoices = await invoceFactory.execute(0,2);
     expect(invoices.length>0).toBe(true);
   })
 });

@@ -9,7 +9,8 @@
     "start:inspect": "tsx --inspect-brk ./src/start/server.ts",
     "start:watch": "tsx watch ./src/start/server.ts",
     "lint:fix": "eslint --fix --ext .js,.mjs,.ts,.json .",
-    "test": "jest"
+    "test": "jest",
+    "extract":"tsx ./src/infra/cron-job/extraction.ts"
   },
   "keywords": [],
   "author": "",
@@ -53,6 +54,7 @@
     "http-status-codes": "^2.3.0",
     "mongoose": "^8.4.0",
     "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
     "pdf-parse": "^1.1.1",
     "uuid": "^9.0.1",
     "watch": "^1.0.2",

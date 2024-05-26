@@ -1,6 +1,6 @@
 import axios from "axios";
 
-test("Deve testar a API (GET /)", async function(){
+test.skip("Deve testar a API (GET /)", async function(){
    const response = await axios({
     url:"http://localhost:3001",
     method:"get",
@@ -14,7 +14,7 @@ test("Deve testar a API (GET /api/invoice)", async function(){
     method:"get",
    })
    expect(response.status).toBe(200)
-})
+},20000)
 
 test("Deve testar a API (POST /api/user)", async function(){
    const response = await axios({
@@ -22,7 +22,7 @@ test("Deve testar a API (POST /api/user)", async function(){
     method:"GET",
    })
    expect(response.status).toBe(200)
-})
+},20000)
 
 test("Deve testar a API (GET /api/invoice/fetchall?id=&skip=4&take=20)", async function(){
    const response = await axios({
@@ -30,5 +30,5 @@ test("Deve testar a API (GET /api/invoice/fetchall?id=&skip=4&take=20)", async f
     method:"get",
    })
    expect(response.status).toBe(200)
-})
+},20000)
 

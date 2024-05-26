@@ -84,7 +84,7 @@ export class InvoiceRepositoryDataBase implements InvoiceRepository {
         }
       })
       const invoice = invocePrisma.map(InvoiceMapper.invoceMapper)
-      console.log("INVOCEEEEEE###",invoice)
+
       return invoice;
   }
 }

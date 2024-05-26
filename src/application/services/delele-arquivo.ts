@@ -4,7 +4,7 @@ import path from 'path';
 export const DeleteFile = (filePath: string) => {
   const folderPathLocal = `./arquivos/${filePath}`;
   const absolutePath = path.resolve(folderPathLocal);
-  console.log(absolutePath)
+
 
     fs.unlink(absolutePath, (err) => {
       if (err) {
