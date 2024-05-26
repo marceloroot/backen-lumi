@@ -1,7 +1,5 @@
 import { Router } from 'express';
 const multer  = require('multer')
-import { ExtractDataFileUseCaseFactory } from '../facotry/abstract-factory/invoice/extract-data-file-use-case-factory';
-import { connectionPrisma } from '../prisma/prisma';
 import { extract, upLoad } from '../controller/upload-controller';
 // Multer Configuração
 const storage = multer.diskStorage({
@@ -31,7 +29,7 @@ const upload = multer({
 const router = Router();
 
 
-router.get('/', extract)
+router.get('/extract', extract)
 
 
 router.post('/upload', upload.single('file'), upLoad)

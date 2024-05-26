@@ -13,7 +13,17 @@ export class ExtractDataFileDashBoardUseCase {
     try {
       const invoices = await this.invoiceRepository.findAllUser(userId);
       if (!invoices.length) {
-        throw new Error("No invoices found for the given user.");
+        const dataClean:DashBoardDTO={
+          compensatedEnergy:0,
+          economiaGD:0,
+          electricPowerConsumption:0,
+          invoicesEnergia:[],
+          invoiceUsers:[],
+          monetaryValues:[],
+          totalValueWithoutGD:0
+          
+        };
+        return dataClean
       }
       const user = invoices[0].user;
       if (!user) {
@@ -141,7 +151,7 @@ export class ExtractDataFileDashBoardUseCase {
       return retornoDash;
     } catch (err) {
       console.error("Erro ao inserir dados:", err);
-      throw new Error("Erro ao inserir dados");
+      throw new Error("Erro ao buscar invoice");
     }
   }
 }
